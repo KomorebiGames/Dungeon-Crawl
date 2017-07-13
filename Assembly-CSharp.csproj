@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Fist.cs" />
      <Compile Include="Assets\Scripts\FistController.cs" />
      <Compile Include="Assets\Scripts\IDamageable.cs" />
+     <Compile Include="Assets\Scripts\LightManager.cs" />
      <Compile Include="Assets\Scripts\LivingEntity.cs" />
      <Compile Include="Assets\Scripts\LocalNavMeshBuilder.cs" />
      <Compile Include="Assets\Scripts\MapGenerator.cs" />
