@@ -55,7 +55,7 @@ public class WeaponController : MonoBehaviour {
 		// If damage has not already been applied this animation and
 		// the encountered object is damageable, apply damage
 		//
-		if (!alreadyHit) {
+		if (attacking && !alreadyHit) {
 			IDamageable damageableObject = other.GetComponent<IDamageable>();
 			if (damageableObject != null) {
 				alreadyHit = true;

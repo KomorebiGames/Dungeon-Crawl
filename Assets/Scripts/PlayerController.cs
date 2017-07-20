@@ -7,22 +7,26 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 	/// <summary>
-	/// The x-axis mouse sensitivity.
+	/// The mouse sensitivity.
 	/// </summary>
-	public float mouseSensitivityX = 1;
-	/// <summary>
-	/// The y-axis mouse sensitivity.
-	/// </summary>
-	public float mouseSensitivityY = 1;
+	public float mouseSensitivity = 1;
 	/// <summary>
 	/// The player walk speed.
 	/// </summary>
 	public float walkSpeed = 4;
+	/// <summary>
+	/// The pause menu.
+	/// </summary>
+	public GameObject pauseMenu;
 
 	/// <summary>
 	/// <c>true</c> if attacking; otherwise, <c>faclse</c>.
 	/// </summary>
 	bool attacking;
+	/// <summary>
+	/// <c>true</c> if the game is paused; otherwise, <c>faclse</c>.
+	/// </summary>
+	bool paused;
 	/// <summary>
 	/// The amount to move this frame.
 	/// </summary>
@@ -55,20 +59,27 @@ public class PlayerController : MonoBehaviour {
 		Cursor.visible = false;
 		cameraTransform = Camera.main.transform;
 		rigidbody = GetComponent<Rigidbody>();
+		paused = false;
 	}
 
 	/// <summary>
 	/// Update this instance.
 	/// </summary>
 	void Update () {
-		
+
+		if(Input.GetKeyDown(KeyCode.Escape)) {
+			PauseGame();
+		}
+			
 		//
 		// Rotate the camera based on mouse movement
 		//
-		transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * mouseSensitivityX);
-		verticalLookRotation += Input.GetAxis("Mouse Y") * mouseSensitivityY;
-		verticalLookRotation = Mathf.Clamp(verticalLookRotation, -60, 60);
-		cameraTransform.localEulerAngles = Vector3.left * verticalLookRotation;
+		if (!paused) {
+			transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * mouseSensitivity);
+			verticalLookRotation += Input.GetAxis("Mouse Y") * mouseSensitivity;
+			verticalLookRotation = Mathf.Clamp(verticalLookRotation, -60, 60);
+			cameraTransform.localEulerAngles = Vector3.left * verticalLookRotation;
+		}
 
 		//
 		// Get keyboard input
@@ -90,6 +101,28 @@ public class PlayerController : MonoBehaviour {
 	void FixedUpdate() {
 		Vector3 localMove = transform.TransformDirection(moveAmount) * Time.fixedDeltaTime;
 		rigidbody.MovePosition(rigidbody.position + localMove);
+	}
+
+	/// <summary>
+	/// Pauses the game.
+	/// </summary>
+	public void PauseGame() {
+		Time.timeScale = 0;
+		pauseMenu.SetActive(true);
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
+		paused = true;
+	}
+
+	/// <summary>
+	/// Unpauses the game.
+	/// </summary>
+	public void UnpauseGame() {
+		Time.timeScale = 1;
+		pauseMenu.SetActive(false);
+		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
+		paused = false;
 	}
 
 }
