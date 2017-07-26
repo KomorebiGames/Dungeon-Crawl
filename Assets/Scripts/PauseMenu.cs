@@ -1,21 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
 
+	/// <summary>
+	/// The player controller.
+	/// </summary>
 	public PlayerController playerController;
+	/// <summary>
+	/// The options menu.
+	/// </summary>
 	public GameObject optionsMenu;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	/// <summary>
 	/// Resume the game.
@@ -30,6 +27,13 @@ public class PauseMenu : MonoBehaviour {
 	public void Options() {
 		optionsMenu.SetActive(true);
 		gameObject.SetActive(false);
+	}
+
+	/// <summary>
+	/// Restart the game.
+	/// </summary>
+	public void Restart() {
+		SceneManager.LoadScene("Main");
 	}
 
 	/// <summary>
