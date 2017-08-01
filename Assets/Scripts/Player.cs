@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Gets input for player.
 /// </summary>
 public class Player : LivingEntity {
+
+	public Slider healthBar;
 
 	/// <summary>
 	/// The player controller.
@@ -23,6 +26,18 @@ public class Player : LivingEntity {
 	/// </summary>
 	void Awake() {
 		controller = GetComponent<PlayerController>();
+		healthBar.maxValue = startingHealth;
+		healthBar.value = startingHealth;
+	}
+
+	/// <summary>
+	/// Player takes damage and updates health bar UI.
+	/// </summary>
+	/// <param name="damage">Damage amount.</param>
+	public override void TakeDamage(float damage)
+	{
+		base.TakeDamage(damage);
+		healthBar.value = health;
 	}
 
 	/// <summary>
